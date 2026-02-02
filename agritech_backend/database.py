@@ -2,7 +2,6 @@ import sqlite3
 
 def get_db_connection():
     conn = sqlite3.connect('agritech.db')
-    # This line is CRITICAL: It allows accessing columns by name
     conn.row_factory = sqlite3.Row 
     return conn
 
