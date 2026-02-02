@@ -44,7 +44,7 @@ export default function LoginScreen() {
         )
         .join("&");
 
-      const response = await fetch("http://allan.zivo.cloud/admin/token", {
+      const response = await fetch("https://allan.zivo.cloud/admin/token", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: formBody,

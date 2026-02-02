@@ -37,7 +37,7 @@ export default function CollectionScreen() {
 
       // Attempt immediate sync to EliteBook
       const response = await fetch(
-        "http://allan.zivo.cloud/admin/sync-records",
+        "https://allan.zivo.cloud/admin/sync-records",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

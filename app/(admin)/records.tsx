@@ -23,7 +23,9 @@ export default function RecordsScreen() {
   const fetchRecords = async () => {
     try {
       // Points to your backend (Update this to farm8.eport.dev in Task 2)
-      const response = await fetch("http://allan.zivo.cloud/admin/all-records");
+      const response = await fetch(
+        "https://allan.zivo.cloud/admin/all-records",
+      );
       const json = await response.json();
       setRecords(json);
       setFilteredRecords(json);
@@ -57,7 +59,7 @@ export default function RecordsScreen() {
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
 
-      {/* CUSTOM HEADER - NO UGLY DEFAULT TEXT */}
+      {/* CUSTOM HEADER  */}
       <SafeAreaView style={styles.headerSafe} edges={["top"]}>
         <View style={styles.header}>
           <TouchableOpacity

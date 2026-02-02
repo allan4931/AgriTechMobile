@@ -18,7 +18,7 @@ export default function ClerksManagement() {
 
   useEffect(() => {
     // Fetches all unique clerks who have submitted records
-    fetch("http://192.168.1.90:8000/admin/all-records")
+    fetch("https://allan.zivo.cloud/admin/all-records")
       .then((res) => res.json())
       .then((data) => {
         const uniqueClerks = [
