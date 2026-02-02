@@ -36,11 +36,14 @@ export default function CollectionScreen() {
       await saveOfflineRecord(formData);
 
       // Attempt immediate sync to EliteBook
-      const response = await fetch("http://192.168.1.90:8000/sync-records", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify([formData]),
-      });
+      const response = await fetch(
+        "http://allan.zivo.cloud/admin/sync-records",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify([formData]),
+        },
+      );
 
       if (response.ok) {
         Alert.alert("Success", "Record synced to EliteBook successfully!");

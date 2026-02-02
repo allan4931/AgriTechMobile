@@ -24,7 +24,7 @@ export default function SettingsScreen() {
         <View style={styles.settingItem}>
           <View>
             <Text style={styles.setLabel}>Cloud Synchronization</Text>
-            <Text style={styles.setSub}>farm8.eport.dev</Text>
+            <Text style={styles.setSub}>allan.zivo.cloud</Text>
           </View>
           <Switch
             value={true}

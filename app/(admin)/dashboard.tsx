@@ -19,9 +19,7 @@ export default function AdminDashboard() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(
-        "http://192.168.1.90:8000/admin/all-records",
-      );
+      const response = await fetch("allan.zivo.cloud/admin/all-records");
       const json = await response.json();
       setData(json);
     } catch (error) {

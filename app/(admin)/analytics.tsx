@@ -30,7 +30,7 @@ export default function AnalyticsScreen() {
         <View style={styles.dataRow}>
           <View style={styles.dataBox}>
             <Text style={styles.boxLabel}>Live Nodes</Text>
-            <Text style={styles.boxVal}>64.23.247.60</Text>
+            <Text style={styles.boxVal}>allan.zivo.cloud</Text>
           </View>
           <View style={styles.dataBox}>
             <Text style={styles.boxLabel}>Protocol</Text>

@@ -2,14 +2,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    FlatList,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  FlatList,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -23,9 +23,7 @@ export default function RecordsScreen() {
   const fetchRecords = async () => {
     try {
       // Points to your backend (Update this to farm8.eport.dev in Task 2)
-      const response = await fetch(
-        "http://192.168.1.90:8000/admin/all-records",
-      );
+      const response = await fetch("http://allan.zivo.cloud/admin/all-records");
       const json = await response.json();
       setRecords(json);
       setFilteredRecords(json);

@@ -1,50 +1,29 @@
-# Welcome to your Expo app 👋
+# AgriTech Mobile - Commercial Backend & Frontend
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This repository contains the core infrastructure for the AgriTech Mobile application. It is organized as a monorepo containing both the FastAPI backend and the mobile application source code.
 
-## Get started
+## 🏗 Project Structure
 
-1. Install dependencies
+- **/agritech_backend**: FastAPI Python application (REST API).
+- **/frontend**: Expo / React Native mobile application.
 
-   ```bash
-   npm install
-   ```
+## 🚀 Backend Setup (Production)
 
-2. Start the app
+The backend is deployed on Ubuntu 24.04 and managed via Nginx and Systemd.
 
-   ```bash
-   npx expo start
-   ```
+### 1. Environment Configuration
 
-In the output, you'll find options to open the app in a
+Create a `.env` file in the `agritech_backend` directory with the following variables:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- `SECRET_KEY`: Cryptographically secure string for JWT signing.
+- `ALGORITHM`: (Default: HS256)
+- `ACCESS_TOKEN_EXPIRE_MINUTES`: Token lifespan.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### 2. Installation
 
 ```bash
-npm run reset-project
+cd agritech_backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

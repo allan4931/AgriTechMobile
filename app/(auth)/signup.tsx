@@ -36,7 +36,7 @@ export default function SignupScreen() {
 
     setLoading(true);
     try {
-      const response = await fetch("http://192.168.1.90:8000/register", {
+      const response = await fetch("http://allan.zivo.cloud/admin/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
