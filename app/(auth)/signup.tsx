@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import API_URL from "../../constants/Api";
 
 const { height } = Dimensions.get("window");
 
@@ -36,7 +37,7 @@ export default function SignupScreen() {
 
     setLoading(true);
     try {
-      const response = await fetch("https://allan.zivo.cloud/admin/register", {
+      const response = await fetch(`${API_URL}/admin/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

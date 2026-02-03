@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import API_URL from "../../constants/Api";
 
 export default function ClerksManagement() {
   const [clerks, setClerks] = useState([]);
@@ -17,8 +18,7 @@ export default function ClerksManagement() {
   const router = useRouter();
 
   useEffect(() => {
-    // Fetches all unique clerks who have submitted records
-    fetch("https://allan.zivo.cloud/admin/all-records")
+    fetch(`${API_URL}/admin/all-records`)
       .then((res) => res.json())
       .then((data) => {
         const uniqueClerks = [

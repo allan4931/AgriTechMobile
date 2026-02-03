@@ -11,6 +11,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import API_URL from "../../constants/Api";
 import { useOffline } from "../../hooks/useOffline";
 
 export default function CollectionScreen() {
@@ -23,7 +24,7 @@ export default function CollectionScreen() {
     phone_number: "",
     crop_type: "",
     farm_size: "",
-    clerk_email: "clerk@agritech.com", // Replace with actual logged-in user email
+    clerk_email: "",
   });
 
   const handleSave = async () => {
@@ -35,15 +36,11 @@ export default function CollectionScreen() {
     try {
       await saveOfflineRecord(formData);
 
-      // Attempt immediate sync to EliteBook
-      const response = await fetch(
-        "https://allan.zivo.cloud/admin/sync-records",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify([formData]),
-        },
-      );
+      const response = await fetch(`${API_URL}/admin/sync-records`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify([formData]),
+      });
 
       if (response.ok) {
         Alert.alert("Success", "Record synced to EliteBook successfully!");

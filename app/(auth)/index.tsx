@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import API_URL from "../../constants/Api";
 
 const { height } = Dimensions.get("window");
 
@@ -44,7 +45,7 @@ export default function LoginScreen() {
         )
         .join("&");
 
-      const response = await fetch("https://allan.zivo.cloud/admin/token", {
+      const response = await fetch(`${API_URL}/admin/token`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: formBody,

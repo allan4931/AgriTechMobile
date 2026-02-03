@@ -12,6 +12,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import API_URL from "../../constants/Api";
 
 export default function RecordsScreen() {
   const [records, setRecords] = useState([]);
@@ -22,10 +23,7 @@ export default function RecordsScreen() {
 
   const fetchRecords = async () => {
     try {
-      // Points to your backend (Update this to farm8.eport.dev in Task 2)
-      const response = await fetch(
-        "https://allan.zivo.cloud/admin/all-records",
-      );
+      const response = await fetch(`${API_URL}/admin/all-records`);
       const json = await response.json();
       setRecords(json);
       setFilteredRecords(json);

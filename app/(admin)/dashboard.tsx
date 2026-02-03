@@ -11,6 +11,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import API_URL from "../../constants/Api";
 
 export default function AdminDashboard() {
   const [data, setData] = useState([]);
@@ -19,7 +20,7 @@ export default function AdminDashboard() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("https//allan.zivo.cloud/admin/all-records");
+      const response = await fetch(`${API_URL}/admin/all-records`);
       const json = await response.json();
       setData(json);
     } catch (error) {
