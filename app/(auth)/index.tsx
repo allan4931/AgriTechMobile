@@ -65,6 +65,7 @@ export default function LoginScreen() {
           setLoading(false);
           return;
         }
+        await AsyncStorage.setItem("userEmail", email.trim());
 
         await AsyncStorage.setItem("userToken", data.access_token);
         await AsyncStorage.setItem("userRole", backendRole);

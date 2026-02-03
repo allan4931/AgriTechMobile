@@ -20,7 +20,7 @@ export default function AdminDashboard() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`${API_URL}/admin/all-records`);
+      const response = await fetch(`${API_URL}/all-records`);
       const json = await response.json();
       setData(json);
     } catch (error) {

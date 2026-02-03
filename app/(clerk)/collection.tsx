@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
   ScrollView,
@@ -13,6 +14,16 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import API_URL from "../../constants/Api";
 import { useOffline } from "../../hooks/useOffline";
+
+const [loggedEmail, setLoggedEmail] = useState("");
+
+useEffect(() => {
+  const fetchEmail = async () => {
+    const val = await AsyncStorage.getItem("userEmail");
+    if (val) setLoggedEmail(val);
+  };
+  fetchEmail();
+}, []);
 
 export default function CollectionScreen() {
   const router = useRouter();
@@ -43,7 +54,7 @@ export default function CollectionScreen() {
       });
 
       if (response.ok) {
-        Alert.alert("Success", "Record synced to EliteBook successfully!");
+        Alert.alert("Success", "Record synced successfully!");
       } else {
         Alert.alert(
           "Saved Locally",
