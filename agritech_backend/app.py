@@ -5,7 +5,16 @@ from pydantic import BaseModel
 from typing import List
 from database import get_db_connection, init_db
 
+import os
+from dotenv import load_dotenv
+from fastapi import FastAPI
+
+load_dotenv()
+
 app = FastAPI()
+
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
 
 app.add_middleware(
     CORSMiddleware,
@@ -84,7 +93,7 @@ async def sync_records(records: List[FarmerRecord]):
 
 # --- ADMIN VIEW ---
 
-@app.get("/admin/all-records")
+@app.get("/all-records")
 async def get_all_records():
     conn = get_db_connection()
     rows = conn.execute('SELECT * FROM farmer_records ORDER BY id DESC').fetchall()

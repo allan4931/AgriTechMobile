@@ -45,7 +45,7 @@ export default function LoginScreen() {
         )
         .join("&");
 
-      const response = await fetch(`${API_URL}/admin/token`, {
+      const response = await fetch(`${API_URL}/token`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: formBody,
@@ -173,7 +173,7 @@ export default function LoginScreen() {
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>Need a staff account?</Text>
-          <TouchableOpacity onPress={() => router.push("/(auth)/signup")}>
+          <TouchableOpacity onPress={() => router.push("/signup")}>
             <Text style={styles.signupLink}> Register</Text>
           </TouchableOpacity>
         </View>

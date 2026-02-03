@@ -36,7 +36,7 @@ export default function CollectionScreen() {
     try {
       await saveOfflineRecord(formData);
 
-      const response = await fetch(`${API_URL}/admin/sync-records`, {
+      const response = await fetch(`${API_URL}/sync-records`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify([formData]),

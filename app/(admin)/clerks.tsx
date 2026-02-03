@@ -18,7 +18,7 @@ export default function ClerksManagement() {
   const router = useRouter();
 
   useEffect(() => {
-    fetch(`${API_URL}/admin/all-records`)
+    fetch(`${API_URL}/all-records`)
       .then((res) => res.json())
       .then((data) => {
         const uniqueClerks = [
