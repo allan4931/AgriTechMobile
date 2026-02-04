@@ -31,6 +31,7 @@ class FarmerRecord(BaseModel):
     crop_type: str
     farm_size: str
     clerk_email: str
+    localId: str
 
 class AppConfig(BaseModel):
     crops: List[str]
@@ -87,9 +88,9 @@ async def sync_records(records: List[FarmerRecord]):
     try:
         for r in records:
             conn.execute('''
-                INSERT INTO farmer_records (farmer_name, id_number, phone_number, crop_type, farm_size, clerk_email)
-                VALUES (?, ?, ?, ?, ?, ?)
-            ''', (r.farmer_name, r.id_number, r.phone_number, r.crop_type, r.farm_size, r.clerk_email))
+                INSERT INTO farmer_records (farmer_name, id_number, phone_number, crop_type, farm_size, clerk_email, localId)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ''', (r.farmer_name, r.id_number, r.phone_number, r.crop_type, r.farm_size, r.clerk_email, r.localId))
         conn.commit()
         return {"status": "success"}
     except Exception as e:
