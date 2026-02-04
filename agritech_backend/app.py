@@ -32,6 +32,11 @@ class FarmerRecord(BaseModel):
     farm_size: str
     clerk_email: str
 
+class AppConfig(BaseModel):
+    crops: List[str]
+    farm_types: List[str]
+    locations: List[str]
+
 class UserRegister(BaseModel):
     username: str
     password: str
@@ -101,3 +106,35 @@ async def get_all_records():
     rows = conn.execute('SELECT * FROM farmer_records ORDER BY id DESC').fetchall()
     conn.close()
     return [dict(row) for row in rows]
+
+# --- ADMIN CONFIGURATION ---
+
+@app.post("/set-config")
+async def set_config(config: AppConfig):
+    conn = get_db_connection()
+    try:
+        import json
+        config_json = json.dumps(config.dict())
+        conn.execute('DELETE FROM app_config') 
+        conn.execute('INSERT INTO app_config (data) VALUES (?)', (config_json,))
+        conn.commit()
+        return {"message": "Configuration updated successfully"}
+    finally:
+        conn.close()
+
+@app.get("/get-config")
+async def get_config():
+    conn = get_db_connection()
+    row = conn.execute('SELECT data FROM app_config LIMIT 1').fetchone()
+    conn.close()
+    
+    if row:
+        import json
+        return json.loads(row['data'])
+    
+    # Default fallback options if Admin hasn't set anything yet
+    return {
+        "crops": ["Maize", "Cotton", "Tobacco"],
+        "farm_types": ["Small Scale", "Commercial"],
+        "locations": ["Harare", "Bulawayo"]
+    }

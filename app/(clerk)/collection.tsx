@@ -14,6 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import API_URL from "../../constants/Api";
 import { useOffline } from "../../hooks/useOffline";
+const { saveOfflineRecord, markAsSynced } = useOffline();
 
 export default function CollectionScreen() {
   const router = useRouter();
@@ -47,27 +48,36 @@ export default function CollectionScreen() {
     }
 
     try {
-      await saveOfflineRecord(formData);
+      const recordToSave = {
+        ...formData,
+        clerk_email: loggedEmail,
+        timestamp: new Date().toISOString(),
+      };
 
-      const response = await fetch(`${API_URL}/sync-records`, {
+      await saveOfflineRecord(recordToSave);
+
+      fetch(`${API_URL}/sync-records`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify([formData]),
-      });
+        body: JSON.stringify([recordToSave]),
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log("Sync successful");
+          }
+        })
+        .catch((err) => {
+          console.log("Device is offline. Sync will happen later.");
+        });
 
-      if (response.ok) {
-        Alert.alert("Success", "Record synced successfully!");
-      } else {
-        Alert.alert(
-          "Saved Locally",
-          "Record saved to device. Will sync when online.",
-        );
-      }
-
-      router.back();
+      Alert.alert(
+        "Record Saved",
+        "Data is stored on this gadget. It will upload to the server automatically when you have signal.",
+        [{ text: "OK", onPress: () => router.back() }],
+      );
     } catch (error) {
-      Alert.alert("Offline", "Saved to local storage.");
-      router.back();
+      console.error(error);
+      Alert.alert("Error", "Failed to save data to the gadget.");
     }
   };
 

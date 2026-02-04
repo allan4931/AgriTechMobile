@@ -7,7 +7,8 @@ def get_db_connection():
 
 def init_db():
     conn = get_db_connection()
-    # Create Farmer Records Table
+    
+    # 1. Farmer Records Table
     conn.execute('''
         CREATE TABLE IF NOT EXISTS farmer_records (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,7 +21,8 @@ def init_db():
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ''')
-    # Create Users Table
+    
+    # 2. Users Table
     conn.execute('''
         CREATE TABLE IF NOT EXISTS users (
             username TEXT PRIMARY KEY,
@@ -29,5 +31,13 @@ def init_db():
             role TEXT
         )
     ''')
+
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS app_config (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            data TEXT NOT NULL
+        )
+    ''')
+    
     conn.commit()
     conn.close()

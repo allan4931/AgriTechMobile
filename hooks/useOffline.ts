@@ -11,16 +11,18 @@ export interface FarmerRecord {
   clerk_email: string;
   timestamp?: string;
   synced?: boolean;
+  localId: string;
 }
 
 export const useOffline = () => {
-  const saveOfflineRecord = async (record: FarmerRecord) => {
+  const saveOfflineRecord = async (record: Omit<FarmerRecord, "localId">) => {
     try {
       const existingData = await AsyncStorage.getItem(STORAGE_KEY);
       const records = existingData ? JSON.parse(existingData) : [];
 
       const newRecord = {
         ...record,
+        localId: Date.now().toString(),
         timestamp: new Date().toISOString(),
         synced: false,
       };
@@ -31,6 +33,18 @@ export const useOffline = () => {
     } catch (error) {
       console.error("Error saving locally:", error);
       return false;
+    }
+  };
+
+  const markAsSynced = async (localId: string) => {
+    try {
+      const data = await getOfflineRecords();
+      const updated = data.map((r) =>
+        r.localId === localId ? { ...r, synced: true } : r,
+      );
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    } catch (error) {
+      console.error("Error updating sync status:", error);
     }
   };
 
@@ -56,6 +70,7 @@ export const useOffline = () => {
   return {
     saveOfflineRecord,
     getOfflineRecords,
+    markAsSynced, // Export this
     clearSyncedRecords,
   };
 };
