@@ -14,11 +14,10 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import API_URL from "../../constants/Api";
 import { useOffline } from "../../hooks/useOffline";
-const { saveOfflineRecord, markAsSynced } = useOffline();
 
 export default function CollectionScreen() {
   const router = useRouter();
-  const { saveOfflineRecord } = useOffline();
+  const { saveOfflineRecord, markAsSynced } = useOffline();
   const [loggedEmail, setLoggedEmail] = useState("");
 
   const [formData, setFormData] = useState({
@@ -51,33 +50,33 @@ export default function CollectionScreen() {
       const recordToSave = {
         ...formData,
         clerk_email: loggedEmail,
-        timestamp: new Date().toISOString(),
       };
 
-      await saveOfflineRecord(recordToSave);
+      const localId = await saveOfflineRecord(recordToSave);
 
-      fetch(`${API_URL}/sync-records`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify([recordToSave]),
-      })
-        .then((response) => {
-          if (response.ok) {
-            console.log("Sync successful");
-          }
+      if (localId) {
+        Alert.alert(
+          "Record Saved",
+          "Data is stored on this gadget. It will upload to the server automatically when you have signal.",
+          [{ text: "OK", onPress: () => router.back() }],
+        );
+
+        fetch(`${API_URL}/sync-records`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify([{ ...recordToSave, localId }]),
         })
-        .catch((err) => {
-          console.log("Device is offline. Sync will happen later.");
-        });
-
-      Alert.alert(
-        "Record Saved",
-        "Data is stored on this gadget. It will upload to the server automatically when you have signal.",
-        [{ text: "OK", onPress: () => router.back() }],
-      );
+          .then((response) => {
+            if (response.ok) {
+              markAsSynced(localId);
+            }
+          })
+          .catch(() => {
+            console.log("Device is offline");
+          });
+      }
     } catch (error) {
-      console.error(error);
-      Alert.alert("Error", "Failed to save data to the gadget.");
+      Alert.alert("Error", "Failed to save data.");
     }
   };
 
