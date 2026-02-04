@@ -69,7 +69,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     user = dict(row)
     
     return {
-        "access_token": user["username"],
+        "access_token": user["username"], 
         "token_type": "bearer",
         "role": user["role"]
     }
