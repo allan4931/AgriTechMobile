@@ -59,15 +59,17 @@ async def register(user: UserRegister):
 @app.post("/token")
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     conn = get_db_connection()
-    user = conn.execute('SELECT * FROM users WHERE username = ? AND password = ?',
+    row = conn.execute('SELECT * FROM users WHERE username = ? AND password = ?',
                         (form_data.username, form_data.password)).fetchone()
     conn.close()
     
-    if not user:
+    if not row:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
     
+    user = dict(row)
+    
     return {
-        "access_token": user["username"], 
+        "access_token": user["username"],
         "token_type": "bearer",
         "role": user["role"]
     }
