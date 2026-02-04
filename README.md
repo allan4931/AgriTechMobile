@@ -6,7 +6,7 @@ A professional, full-stack data collection suite designed for commercial agricul
 
 ## 📱 Deliverables for Task 2
 
-### **[➔ Download Android APK (v1.0.0)](https://expo.dev/artifacts/eas/a7297dce-6092-4aee-8422-6cda9677b600.apk)**
+### **[➔ Download Android APK (v1.0.0)](https://expo.dev/artifacts/eas/kK6Ef3MCrsb7KotbpgcqpW.apk)**
 
 _Click the link above to download and install the application directly on your Android device._
 
