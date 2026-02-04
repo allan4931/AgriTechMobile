@@ -15,19 +15,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import API_URL from "../../constants/Api";
 import { useOffline } from "../../hooks/useOffline";
 
-const [loggedEmail, setLoggedEmail] = useState("");
-
-useEffect(() => {
-  const fetchEmail = async () => {
-    const val = await AsyncStorage.getItem("userEmail");
-    if (val) setLoggedEmail(val);
-  };
-  fetchEmail();
-}, []);
-
 export default function CollectionScreen() {
   const router = useRouter();
   const { saveOfflineRecord } = useOffline();
+  const [loggedEmail, setLoggedEmail] = useState("");
 
   const [formData, setFormData] = useState({
     farmer_name: "",
@@ -37,6 +28,17 @@ export default function CollectionScreen() {
     farm_size: "",
     clerk_email: "",
   });
+
+  useEffect(() => {
+    const fetchEmail = async () => {
+      const val = await AsyncStorage.getItem("userEmail");
+      if (val) {
+        setLoggedEmail(val);
+        setFormData((prev) => ({ ...prev, clerk_email: val }));
+      }
+    };
+    fetchEmail();
+  }, []);
 
   const handleSave = async () => {
     if (!formData.farmer_name || !formData.crop_type) {
